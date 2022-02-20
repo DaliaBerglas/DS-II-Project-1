@@ -1,14 +1,15 @@
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
-
 public class DataFrameTest {
+    String peoplePath = DataFrameTest.class.getResource("people.csv").getFile();
+    String jobtitlePath = DataFrameTest.class.getResource("jobtitle.csv").getFile();
+    String salaryPath = DataFrameTest.class.getResource("salary.csv").getFile();
 
     @Test
     public void test1() {
-        DataFrame people = new InMemoryDataFrame("C:\\Users\\...", Arrays.asList("ID"));
-        DataFrame salary = new InMemoryDataFrame("C:\\Users\\...", Arrays.asList("PersonId"));
-        DataFrame jobTitle = new InMemoryDataFrame("C:\\Users\\...", Arrays.asList("PersonId"));
+        DataFrame people = new InMemoryDataFrame(peoplePath, "ID");
+        DataFrame salary = new InMemoryDataFrame(jobtitlePath, "PersonId");
+        DataFrame jobTitle = new InMemoryDataFrame(salaryPath, "PersonId");
 
         FilterCriteria inBoston = people.col("loc").equalTo("boston");
         FilterCriteria overThirty = people.col("age").greaterThan(30);
@@ -29,8 +30,8 @@ public class DataFrameTest {
 
 
 
-        DataFrame all = people.join(salary, Arrays.asList("ID"), Arrays.asList("PersonId"))
-                            .join(jobTitle, Arrays.asList("ID"), Arrays.asList("PersonId"));
+        DataFrame all = people.join(salary, "ID", "PersonId")
+                            .join(jobTitle, "ID", "PersonId");
 
         DataFrame earningsByCity = all
                                     .filterBy(all.col("jobtitle").equalTo("engineer"))
@@ -43,7 +44,7 @@ public class DataFrameTest {
 
     @Test
     public void test2() {
-        DataFrame people = new DiskDataFrame("C:\\Users\\...");
+        DataFrame people = new DiskDataFrame(peoplePath);
 
         FilterCriteria inBoston = people.col("loc").equalTo("boston");
         FilterCriteria overThirty = people.col("age").greaterThan(30);
@@ -65,7 +66,7 @@ public class DataFrameTest {
 
     @Test
     public void test3() {
-        DataFrame people = new DiskDataFrame("C:\\Users\\...");
+        DataFrame people = new DiskDataFrame(peoplePath);
 
         FilterCriteria overThirty = people.col("age").greaterThan(30);
 
@@ -81,10 +82,10 @@ public class DataFrameTest {
 
     @Test
     public void test4() {
-        DataFrame people = new InMemoryDataFrame("C:\\Users\\...", Arrays.asList("ID"));
+        DataFrame people = new InMemoryDataFrame(peoplePath, "ID");
 
-        FilterCriteria personId = people.col("ID").equalTo(1234)
-                                    .or(people.col("ID").equalTo(5678));
+        FilterCriteria personId = people.col("ID").equalTo(1)
+                                    .or(people.col("ID").equalTo(2));
 
         people = people.filterBy(personId);
 

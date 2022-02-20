@@ -11,7 +11,7 @@ public interface DataFrame {
 
     GroupByObject groupBy(String... columnNames);
 
-    DataFrame join(DataFrame other, List<String> selfColumns, List<String> otherColumns);
+    DataFrame join(DataFrame other, String selfColumn, String otherColumn);
 
     List<List<Object>> rows();
 

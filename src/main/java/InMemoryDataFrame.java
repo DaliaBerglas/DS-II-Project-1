@@ -1,7 +1,7 @@
 import java.util.List;
 
 public class InMemoryDataFrame implements DataFrame {
-    public InMemoryDataFrame(String loc, List<String> primaryKeys) {
+    public InMemoryDataFrame(String loc, String primaryKey) {
 
     }
 
@@ -25,7 +25,8 @@ public class InMemoryDataFrame implements DataFrame {
         return null;
     }
 
-    public DataFrame join(DataFrame other, List<String> selfColumns, List<String> otherColumns) {
+    public DataFrame join(DataFrame other, String selfColumn, String otherColumn)
+    {
         return null;
     }
 
